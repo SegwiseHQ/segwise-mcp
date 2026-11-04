@@ -76,6 +76,12 @@ Open Cursor's MCP settings and complete the Segwise sign-in prompt. A copyable c
 
 [VS Code MCP documentation](https://code.visualstudio.com/docs/agent-customization/mcp-servers)
 
+### Linear Agent
+
+Add Segwise to your Linear workspace's MCP connector directory, then connect your Segwise account through **Agent personalization**. Use the resulting analytics to draft creative experiments, briefs, and project updates with Linear Agent.
+
+[Linear Agent setup guide](docs/linear.md)
+
 ### Other MCP clients
 
 Add a remote Streamable HTTP server with the URL above and choose OAuth authentication. Use your client's sign-in flow. See the [OAuth setup guide](docs/oauth.md) for discovery URLs, the requested scope, and troubleshooting.
