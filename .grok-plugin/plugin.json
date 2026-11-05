@@ -1,0 +1,13 @@
+{
+  "name": "segwise",
+  "version": "0.1.0",
+  "description": "Analyze advertising and creative performance using your organization's Segwise data through the hosted MCP service.",
+  "author": {
+    "name": "Segwise",
+    "url": "https://segwise.ai"
+  },
+  "homepage": "https://github.com/SegwiseHQ/segwise-mcp",
+  "repository": "https://github.com/SegwiseHQ/segwise-mcp",
+  "license": "MIT",
+  "keywords": ["segwise", "segwise analytics", "segwise mcp"]
+}

@@ -82,6 +82,20 @@ Add Segwise to your Linear workspace's MCP connector directory, then connect you
 
 [Linear Agent setup guide](docs/linear.md)
 
+### Grok Build
+
+This repository includes a Grok Build plugin with one hosted HTTP MCP server, configured in [.mcp.json](.mcp.json), and metadata in [.grok-plugin/plugin.json](.grok-plugin/plugin.json). It contains no executable scripts, hooks, bundled dependencies, or local server process.
+
+For direct MCP setup:
+
+```sh
+grok mcp add --transport http segwise https://mcp.segwise.ai/mcp
+```
+
+Open `/mcps`, select Segwise, and press `i` to complete OAuth sign-in. Ask Grok to list your Segwise organizations before starting an analysis. Use either direct MCP setup or the plugin to avoid configuring the same server twice.
+
+See the [Grok Build plugin guide](docs/grok-build.md) for installation from a checkout, verification steps, and marketplace status. This integration targets the Grok Build terminal client; a marketplace submission does not publish a connector in the Grok web app.
+
 ### Other MCP clients
 
 Add a remote Streamable HTTP server with the URL above and choose OAuth authentication. Use your client's sign-in flow. See the [OAuth setup guide](docs/oauth.md) for discovery URLs, the requested scope, and troubleshooting.
@@ -115,6 +129,8 @@ If more than one organization is available, choose its name; the assistant uses 
 
 OAuth authenticates your account; organization membership and service permissions determine which data you can query. Questions and results pass between your chosen AI client and Segwise, and conversation history may be retained for follow-up analysis. The client provider's own data policies also apply.
 
+The plugin configures HTTPS requests to `https://mcp.segwise.ai/mcp` for MCP tool discovery and calls. OAuth discovery uses `https://mcp.segwise.ai/.well-known/oauth-protected-resource/mcp` and the issuer `https://auth.segwise.ai/oauth/2.1`; authorization, token exchange, and client registration use the endpoints advertised by that issuer. The required scope is `segwise:analytics:query`. Grok manages each user's OAuth credentials; the package contains no API keys, tokens, client secrets, or environment-variable references. See the [OAuth guide](docs/oauth.md) for the exact discovery URLs and access requirements.
+
 [Segwise Privacy Policy](https://segwise.ai/privacy-policy) · [Segwise Terms of Service](https://segwise.ai/tos)
 
 ## Directory listings
@@ -127,4 +143,4 @@ For account access or a customer-specific issue, use your existing Segwise suppo
 
 ## License
 
-The [MIT license](LICENSE) covers the documentation, metadata, and examples in this repository. Access to the hosted Segwise service is governed by your Segwise agreement and the service terms linked above.
+The [MIT license](LICENSE) covers the plugin configuration, documentation, metadata, and examples in this repository. Access to the hosted Segwise service is governed by your Segwise agreement and the service terms linked above.
