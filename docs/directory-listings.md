@@ -34,7 +34,7 @@ Segwise MCP connects AI assistants to the advertising and creative-performance d
 ## Tools
 
 - `list_segwise_organizations`: Discover the organizations the signed-in account can access.
-- `start_segwise_query`: Start an organization-scoped analysis with optional date and app filters.
+- `start_segwise_query`: Start an organization-scoped analysis with optional date and app filters, or explicitly create or update a saved dashboard report using the signed-in user’s dashboard permissions.
 - `get_segwise_query`: Poll a running query and retrieve its result.
 
 ## Official MCP Registry metadata
