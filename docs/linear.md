@@ -2,7 +2,7 @@
 
 Use Segwise's advertising and creative-performance insights while planning work in Linear. Ask Linear Agent to analyze creative fatigue, compare campaign performance, or identify promising creative elements, then use the findings to draft experiment tasks, creative-refresh briefs, or project updates.
 
-Segwise supplies analytics and recommendations through its hosted MCP server. Linear Agent uses those findings within Linear. Segwise's tools do not create Linear issues themselves and cannot change ad campaigns, budgets, or creative assets.
+Segwise supplies analytics and recommendations through its hosted MCP server. Linear Agent can also show a proposed change to your Segwise brand context. Saving the proposal updates the brand page for the selected organization or app.
 
 ## Requirements
 
@@ -26,11 +26,11 @@ Adding a directory entry does not connect a person's Segwise account. Each perso
 
 1. Open **Settings → Personal → Agent personalization**.
 2. Under **MCP connectors**, choose **Add connector → Segwise**.
-3. Sign in with your Segwise account and approve the analytics permission.
+3. Sign in with your Segwise account and review the MCP grant before approving it.
 4. Return to Linear and confirm that Segwise is connected.
 5. Ask Linear Agent: **"List the Segwise organizations I can access."** If multiple organizations are available, choose the organization by name.
 
-The connection uses OAuth 2.1 with PKCE and the `segwise:analytics:query` scope. No API key, shared dashboard token, or local server is needed.
+The connection uses OAuth 2.1 with PKCE. The `segwise:analytics:query` grant covers analytics, saved report operations, and brand edits. For a brand change, Linear Agent must wait for a person to review the preview and supply the exact Save reply before relaying it to Segwise. An unattended task should leave the proposal pending.
 
 ## Try a workflow
 
