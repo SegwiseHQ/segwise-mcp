@@ -16,8 +16,9 @@ This is the public overview, setup guide, and directory metadata for Segwise's h
 - Understand which hooks, calls to action, visuals, themes, and formats contribute to performance.
 - Ask follow-up questions, retrieve existing Segwise creative suggestions, and get recommendations on what to scale, refresh, or test.
 - Save a new dashboard report or update a report you can edit in the dashboard.
+- Review and save changes to your organization's or an individual app's brand context, including creative rules, tone of voice, and brand images.
 
-The MCP service provides analytics and recommendations. It cannot change campaigns, budgets, or creative assets, or generate new creatives. Starting an analysis creates a temporary query job and may save conversation history.
+Starting a query creates a temporary job and may save conversation history. Saving a brand proposal updates the brand page in Segwise. Campaign changes, budget changes, and creative generation are outside the service's capabilities.
 
 ## Before you connect
 
@@ -105,12 +106,18 @@ The available answers depend on the data connected to the selected organization.
 | Tool | Purpose |
 | --- | --- |
 | `list_segwise_organizations` | Lists the eligible organizations your signed-in account can access. |
-| `start_segwise_query` | Starts an analysis or an explicitly requested saved-report operation for one organization. Returns a `job_id` and `conversation_id`. For report writes, set `operation` to `create_report` or `update_report`. |
+| `start_segwise_query` | Starts an analysis, a brand-editing turn, or an explicit saved-report operation for one organization. Returns a `job_id` and `conversation_id`. For report writes, set `operation` to `create_report` or `update_report`. |
 | `get_segwise_query` | Waits for or retrieves the result of a previously started query. |
 
 Queries can take several minutes. Your assistant should keep polling the same `job_id` while its status is `running`, respect `poll_after_seconds` and `execution_deadline`, and avoid duplicate starts. Polling does not extend the execution deadline. A completed result includes the answer and may include citations and a data timestamp. Query jobs are temporary and can expire or be interrupted by a service restart.
 
 If more than one organization is available, choose its name; the assistant uses the corresponding `organization_id`. For follow-ups in the same conversation and organization, preserve the returned `conversation_id`, including when delegating work to another agent. Start a fresh conversation only when you intend to reset the context. Do not reuse handles across unrelated conversations or organizations.
+
+### Edit brand context
+
+Ask, for example, “For our whole organization, change our tone of voice from formal to conversational.” With conversation history enabled, your assistant uses `start_segwise_query` with `operation` omitted and shows the additions, replacements, and removals for the selected scope. For a logo or other brand image, share a Google Drive or Dropbox file link, or use the Segwise upload link and return to the conversation.
+
+Review the preview and reply with the exact **Save brand update** instruction it contains, including the proposal ID. To revise it, describe the change and review the new preview. Your assistant should relay your reply in the same organization and conversation. If someone edited the section in the meantime, Segwise asks for a fresh proposal.
 
 ## Data and access
 
