@@ -29,7 +29,7 @@ Analyze ad performance, update brand context, and generate approved static ads i
 
 ## Longer description
 
-Segwise MCP connects AI assistants to the advertising and creative-performance data available in your Segwise organization. Compare campaigns, apps, ad networks, and creatives using metrics such as spend, CPA, and ROAS. Review proposed brand rules, tone of voice, or images for an organization or app. Saving a reviewed proposal updates the Segwise brand page. Connect to the hosted Streamable HTTP endpoint and sign in with OAuth. Users can also generate static ads by confirming a plan with the estimated generation tokens. Finished images are returned as links. Starting a query creates a temporary job and may save conversation history.
+Segwise MCP connects AI assistants to the advertising and creative-performance data available in your Segwise organization. Compare campaigns, apps, ad networks, and creatives using metrics such as spend, CPA, and ROAS. Review proposed brand rules, tone of voice, or images for an organization or app. Saving a reviewed proposal updates the Segwise brand page. Connect to the hosted Streamable HTTP endpoint and sign in with OAuth. Users can also generate static ads by confirming a plan with the estimated generation tokens. Finished images are returned as links. Generating them leaves existing campaigns, budgets, and creative assets unchanged. Starting a query creates a temporary job and may save conversation history.
 
 ## Tools
 
