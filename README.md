@@ -18,7 +18,9 @@ This is the public overview, setup guide, and directory metadata for Segwise's h
 - Save a new dashboard report or update a report you can edit in the dashboard.
 - Review and save changes to your organization's or an individual app's brand context, including creative rules, tone of voice, and brand images.
 
-Starting a query creates a temporary job and may save conversation history. Saving a brand proposal updates the brand page in Segwise. Campaign changes, budget changes, and creative generation are outside the service's capabilities.
+Ask for static ads in the same conversation as your analysis. Segwise shows a plan with the concepts, copy, references, sizes, and estimated generation tokens. Request changes or reply **Generate these** to approve the displayed plan. Each concept uses the organization's static-image rate. Extra sizes of that concept are included. The assistant polls the confirmation job and returns links to the finished images. If a job is interrupted, ask for your existing static results in the same conversation.
+
+Starting a query creates a temporary job and may save conversation history. Saving a brand proposal updates the brand page in Segwise. Campaign and budget changes are outside the service’s capabilities.
 
 ## Before you connect
 
@@ -106,7 +108,7 @@ The available answers depend on the data connected to the selected organization.
 | Tool | Purpose |
 | --- | --- |
 | `list_segwise_organizations` | Lists the eligible organizations your signed-in account can access. |
-| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. For analytics, omit `operation` or set it to `analyze`. Omit it for brand edits. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
+| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. Analytics accepts optional date and app filters. For analytics, omit `operation` or set it to `analyze`. Omit it for brand edits and static ad requests. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
 | `get_segwise_query` | Waits for or retrieves the result of a previously started query. |
 
 Queries can take several minutes. Your assistant should keep polling the same `job_id` while its status is `running`, respect `poll_after_seconds` and `execution_deadline`, and avoid duplicate starts. Polling does not extend the execution deadline. A completed result includes the answer and may include citations and a data timestamp. Query jobs are temporary and can expire or be interrupted by a service restart.

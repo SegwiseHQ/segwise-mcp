@@ -2,7 +2,7 @@
 
 Use Segwise's advertising and creative-performance insights while planning work in Linear. Ask Linear Agent to analyze creative fatigue, compare campaign performance, or identify promising creative elements, then use the findings to draft experiment tasks, creative-refresh briefs, or project updates.
 
-Segwise supplies analytics and recommendations through its hosted MCP server. Linear Agent can also show a proposed change to your Segwise brand context. Saving the proposal updates the brand page for the selected organization or app.
+Segwise supplies analytics, recommendations, and static ad generation through its hosted MCP server. Linear Agent can also show a proposed change to your Segwise brand context. Saving the proposal updates the brand page for the selected organization or app.
 
 ## Requirements
 
