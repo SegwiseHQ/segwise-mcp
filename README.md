@@ -14,7 +14,8 @@ This is the public overview, setup guide, and directory metadata for Segwise's h
 - Analyze spend, impressions, clicks, installs, CTR, CVR, CPI, CPA, ROAS, revenue, and LTV, where available in your connected data.
 - Identify strong, declining, or fatigued creatives.
 - Understand which hooks, calls to action, visuals, themes, and formats contribute to performance.
-- Ask follow-up questions and get recommendations on what to scale, refresh, or test.
+- Ask follow-up questions, retrieve existing Segwise creative suggestions, and get recommendations on what to scale, refresh, or test.
+- Save a new dashboard report or update a report you can edit in the dashboard.
 
 The MCP service provides analytics and recommendations. It cannot change campaigns, budgets, or creative assets, or generate new creatives. Starting an analysis creates a temporary query job and may save conversation history.
 
@@ -97,14 +98,14 @@ First ask: **"List the Segwise organizations I can access."** Then select an org
 - "Which creatives are showing fatigue, and what should we test next?"
 - "Compare CPA and revenue across my apps for the last 30 days."
 
-The available answers depend on the data connected to the selected organization.
+The available answers depend on the data connected to the selected organization. Stored creative suggestions cover the whole organization. For recommendations about a specific app, ask for an analysis of that app’s performance.
 
 ## Available tools
 
 | Tool | Purpose |
 | --- | --- |
 | `list_segwise_organizations` | Lists the eligible organizations your signed-in account can access. |
-| `start_segwise_query` | Starts an analysis for one organization and returns a `job_id` and `conversation_id`. Accepts optional date and app filters. |
+| `start_segwise_query` | Starts an analysis or an explicitly requested saved-report operation for one organization. Returns a `job_id` and `conversation_id`. For report writes, set `operation` to `create_report` or `update_report`. |
 | `get_segwise_query` | Waits for or retrieves the result of a previously started query. |
 
 Queries can take several minutes. Your assistant should keep polling the same `job_id` while its status is `running`, respect `poll_after_seconds` and `execution_deadline`, and avoid duplicate starts. Polling does not extend the execution deadline. A completed result includes the answer and may include citations and a data timestamp. Query jobs are temporary and can expire or be interrupted by a service restart.
