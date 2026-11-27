@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.SegwiseHQ/segwise-mcp",
   "title": "Segwise MCP",
-  "description": "Advertising and creative-performance analytics for your Segwise organizations.",
-  "version": "0.2.0",
+  "description": "Analyze creative performance and review and save brand context for your Segwise organization.",
+  "version": "0.3.0",
   "websiteUrl": "https://github.com/SegwiseHQ/segwise-mcp",
   "remotes": [
     {

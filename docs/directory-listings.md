@@ -25,16 +25,16 @@ Use these details when submitting Segwise's hosted MCP service to directories. T
 
 ## Short description
 
-Advertising and creative-performance analytics for your Segwise organizations.
+Analyze creative performance and review and save brand context for your Segwise organization.
 
 ## Longer description
 
-Segwise MCP connects AI assistants to the advertising and creative-performance data available in your Segwise organization. Compare campaigns, apps, ad networks, and creatives; analyze metrics such as spend, CPA, and ROAS; identify creative fatigue; and explore which hooks, visuals, and calls to action drive performance. Connect to the hosted Streamable HTTP endpoint and sign in with OAuth. The service provides analytics and recommendations; it cannot modify campaigns or generate creative assets. Starting a query creates a temporary job and may save conversation history.
+Segwise MCP connects AI assistants to the advertising and creative-performance data available in your Segwise organization. Compare campaigns, apps, ad networks, and creatives using metrics such as spend, CPA, and ROAS. Review proposed brand rules, tone of voice, or images for an organization or app. Saving a reviewed proposal updates the Segwise brand page. Connect to the hosted Streamable HTTP endpoint and sign in with OAuth. Starting a query creates a temporary job and may save conversation history.
 
 ## Tools
 
 - `list_segwise_organizations`: Discover the organizations the signed-in account can access.
-- `start_segwise_query`: Start an organization-scoped analysis with optional date and app filters, or explicitly create or update a saved dashboard report using the signed-in user’s dashboard permissions.
+- `start_segwise_query` runs analytics for one organization with optional date and app filters. It can also create or update a dashboard report on explicit request, subject to the signed-in user's dashboard permissions, or propose a brand edit and save it after review.
 - `get_segwise_query`: Poll a running query and retrieve its result.
 
 ## Official MCP Registry metadata
@@ -43,6 +43,6 @@ Segwise MCP connects AI assistants to the advertising and creative-performance d
 
 The optional `repository` field is omitted because the schema describes it as the server's source-code repository. `websiteUrl` points to this public overview. For directories that accept documentation repositories, use the public overview URL in their repository field and identify its documentation-only scope. Directories requiring implementation source need a separate publication decision.
 
-The manifest version is `0.2.0`, matching the integration version in the maintained server source when this overview was prepared. Confirm the deployed version before publishing a registry release, and update the metadata when the service contract changes.
+The manifest identifies version `0.3.0`, which adds brand editing. Before publishing a registry release, compare the manifest version and description with the [hosted server card](https://mcp.segwise.ai/mcp/server-card).
 
 This repository does not publish or submit itself to directories. Registry submission additionally requires publisher authentication, namespace ownership verification, and any directory-specific review. No directory approval or listing status is implied by these files.

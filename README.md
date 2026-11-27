@@ -16,8 +16,9 @@ This is the public overview, setup guide, and directory metadata for Segwise's h
 - Understand which hooks, calls to action, visuals, themes, and formats contribute to performance.
 - Ask follow-up questions, retrieve existing Segwise creative suggestions, and get recommendations on what to scale, refresh, or test.
 - Save a new dashboard report or update a report you can edit in the dashboard.
+- Review and save changes to your organization's or an individual app's brand context, including creative rules, tone of voice, and brand images.
 
-The MCP service provides analytics and recommendations. It cannot change campaigns, budgets, or creative assets, or generate new creatives. Starting an analysis creates a temporary query job and may save conversation history.
+Starting a query creates a temporary job and may save conversation history. Saving a brand proposal updates the brand page in Segwise. Campaign changes, budget changes, and creative generation are outside the service's capabilities.
 
 ## Before you connect
 
@@ -25,7 +26,7 @@ You need a Segwise account with access to an eligible organization, connected an
 
 ## Connect your assistant
 
-Add the server using one of the examples below, complete the browser sign-in, and approve the requested analytics access. Each person connects with their own account. The client discovers OAuth settings automatically; you do not need an API key in these examples.
+Add the server using one of the examples below and complete the browser sign-in with your own Segwise account. The requested `segwise:analytics:query` grant covers analytics, saved report operations, and brand edits for eligible organizations. The client discovers the OAuth settings automatically.
 
 ### Claude Code
 
@@ -105,16 +106,24 @@ The available answers depend on the data connected to the selected organization.
 | Tool | Purpose |
 | --- | --- |
 | `list_segwise_organizations` | Lists the eligible organizations your signed-in account can access. |
-| `start_segwise_query` | Starts an analysis or an explicitly requested saved-report operation for one organization. Returns a `job_id` and `conversation_id`. For report writes, set `operation` to `create_report` or `update_report`. |
+| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. For analytics, omit `operation` or set it to `analyze`. Omit it for brand edits. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
 | `get_segwise_query` | Waits for or retrieves the result of a previously started query. |
 
 Queries can take several minutes. Your assistant should keep polling the same `job_id` while its status is `running`, respect `poll_after_seconds` and `execution_deadline`, and avoid duplicate starts. Polling does not extend the execution deadline. A completed result includes the answer and may include citations and a data timestamp. Query jobs are temporary and can expire or be interrupted by a service restart.
 
 If more than one organization is available, choose its name; the assistant uses the corresponding `organization_id`. For follow-ups in the same conversation and organization, preserve the returned `conversation_id`, including when delegating work to another agent. Start a fresh conversation only when you intend to reset the context. Do not reuse handles across unrelated conversations or organizations.
 
+### Edit brand context
+
+Ask, for example, “For our whole organization, change our tone of voice from formal to conversational.” The assistant shows the additions, replacements, and removals for that scope. Segwise controls the conversation history setting on the hosted service. When history is disabled, brand proposals and saves are unavailable.
+
+Review the preview. To save it, send `Save brand update <proposal ID>` with the ID shown in the preview as your next reply. The client must obtain your approval and relay that reply unchanged. Segwise checks the text the client sends against the latest proposal in the same organization and conversation. To revise the proposal, describe the change and review the new preview. If someone edited the section in the meantime, Segwise requires a fresh proposal.
+
 ## Data and access
 
-OAuth authenticates your account; organization membership and service permissions determine which data you can query. Questions and results pass between your chosen AI client and Segwise, and conversation history may be retained for follow-up analysis. The client provider's own data policies also apply.
+OAuth authenticates your account. The connected client can use the same grant to submit a brand edit for an eligible organization you belong to. An app filter restricts the edit to the selected apps. For an organization-wide change, omit the app filter and confirm the organization scope during review. Demo workspaces are read-only.
+
+For brand images, Segwise can fetch individual Google Drive or Dropbox files you share to prepare the preview. For a local file, open the Segwise upload link in the answer, attach the image, and return to the conversation. A Save reply adds the reviewed images to the named brand group. Your questions and results pass between your chosen client and Segwise, and Segwise may retain conversation history. The client's data policies also apply.
 
 [Segwise Privacy Policy](https://segwise.ai/privacy-policy) · [Segwise Terms of Service](https://segwise.ai/tos)
 
