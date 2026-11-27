@@ -44,6 +44,8 @@ You can also ask:
 
 Review the proposed work before asking Linear Agent to create or update issues. Answers depend on the data available to your Segwise organization.
 
+To select a reference, ask “Show my uploaded images” and choose a numbered result.
+
 To create static ads from the findings, ask Linear Agent to plan the images in this conversation. Review the concepts, sizes, and token estimate, then request edits or reply **Generate these**. Linear Agent forwards your reply, polls the resulting job, and shows the image links. If polling stops, resume the same job. For an expired job, ask for your existing static results in this conversation before considering another generation.
 
 ## Analysis timing and follow-ups

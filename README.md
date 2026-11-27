@@ -22,6 +22,28 @@ Ask for static ads in the same conversation as your analysis. Segwise shows a pl
 
 Saving a brand proposal updates the brand page in Segwise. Generating images leaves existing campaigns, budgets, and creative assets unchanged. Starting a query creates a temporary job and may save conversation history.
 
+### Attach reference images
+
+Any client can ask **“Show my uploaded images”** or **“Find my bottle photos.”** Segwise lists your own image uploads in the selected organization, newest first, with filenames and thumbnail links. Ask for more or select by number: **“Use image 2 as the product and image 4 as the style.”** The priced plan lists the references for each concept.
+
+Clients that can read a selected local file and make an HTTPS PUT can upload a new PNG, JPEG, or WebP directly. Each file can be up to 50 MiB. The image becomes a personal chat upload, available for future selection. Saving it to the brand kit is a separate action.
+
+1. Call `start_segwise_query` with the filename, exact byte count, and MIME type in `reference_upload`. Poll its `job_id` with `get_segwise_query`.
+2. Read the ticket from `result.reference_upload`. PUT the original file bytes to `upload_url` before the ticket’s `expires_at` time, using the returned headers. Send no Segwise credentials or cookies, do not follow redirects, and keep the signed URL out of the chat text.
+3. After a successful PUT, send the `upload_id` in `reference_upload_ids` with the static request. Keep the same organization and conversation. Segwise finalizes the upload, checks ownership, and presents the plan for approval. Use up to ten selected IDs per request.
+
+Example tool arguments for the two starts:
+
+```json
+{"question":"Prepare my bottle photo for upload.","reference_upload":{"file_name":"bottle.png","content_type":"image/png","size_bytes":48217}}
+```
+
+```json
+{"organization_id":"<same organization>","conversation_id":"<same conversation>","question":"Use my bottle photo as the product in one square ad.","reference_upload_ids":["<upload_id from the ticket>"]}
+```
+
+A host that cannot transfer a local file can still browse and select existing uploads. Uploading, browsing, and selecting images never starts generation on its own.
+
 ## Before you connect
 
 You need a Segwise account with access to an eligible organization, connected analytics data, and an MCP client that supports Streamable HTTP and OAuth. Availability depends on your organization's access and your client's policies. Contact your Segwise representative if access needs to be enabled.
@@ -108,7 +130,7 @@ The available answers depend on the data connected to the selected organization.
 | Tool | Purpose |
 | --- | --- |
 | `list_segwise_organizations` | Lists the eligible organizations your signed-in account can access. |
-| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. Analytics accepts optional date and app filters. For analytics, omit `operation` or set it to `analyze`. Omit it for brand edits and static ad requests. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
+| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. For analytics, use optional date and app filters and omit `operation` or set it to `analyze`. Omit it for brand edits and static ad requests. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
 | `get_segwise_query` | Waits for or retrieves the result of a previously started query. |
 
 For static ads, omit `operation`. Send the request, revisions, and the user’s actual confirmation as separate `question` values to `start_segwise_query`, preserving the `organization_id`, `conversation_id`, and app selection. For example:
