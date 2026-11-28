@@ -30,7 +30,7 @@ Adding a directory entry does not connect a person's Segwise account. Each perso
 4. Return to Linear and confirm that Segwise is connected.
 5. Ask Linear Agent: **"List the Segwise organizations I can access."** If multiple organizations are available, choose the organization by name.
 
-The connection uses OAuth 2.1 with PKCE. The `segwise:analytics:query` grant covers analytics, saved report operations, brand edits, and static generation. Generating images can spend organization tokens after you approve a priced plan. For a brand change, Linear Agent must wait for a person to review the preview and supply the exact Save reply before relaying it to Segwise. An unattended task should leave the proposal pending.
+The connection uses OAuth 2.1 with PKCE. The `segwise:analytics:query` grant covers analytics, saved report operations, brand edits, and video and static generation. Generating images can spend organization tokens after you approve a priced plan. For a brand change, Linear Agent must wait for a person to review the preview and supply the exact Save reply before relaying it to Segwise. An unattended task should leave the proposal pending.
 
 ## Try a workflow
 
