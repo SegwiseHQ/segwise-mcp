@@ -1,6 +1,6 @@
 # Segwise MCP
 
-Connect your AI assistant to [Segwise](https://segwise.ai) to analyze advertising performance and generate static ads from plans you approve.
+Connect your AI assistant to [Segwise](https://segwise.ai) to analyze advertising performance and generate static and video ads from plans you approve.
 
 - **Server URL:** `https://mcp.segwise.ai/mcp`
 - **Transport:** Streamable HTTP
@@ -20,17 +20,23 @@ This is the public overview, setup guide, and directory metadata for Segwise's h
 
 Ask for static ads in the same conversation as your analysis. Segwise shows a plan with the concepts, copy, references, sizes, and estimated generation tokens. Request changes or reply **Generate these** to approve the displayed plan. The estimate is the number of concepts multiplied by your organization's static-image rate. Three concepts in four sizes each produce twelve files. If all three concepts render successfully, you pay for three concepts. Additional sizes and failed renders carry no generation charge. The assistant polls the confirmation job and returns links to the finished images. If polling is interrupted, resume with the same job ID. If it has expired, ask for existing static results in the same conversation. Never resend a confirmation automatically.
 
-Saving a brand proposal updates the brand page in Segwise. Generating images leaves existing campaigns, budgets, and creative assets unchanged. Starting a query creates a temporary job and may save conversation history.
+Saving a brand proposal updates the brand page in Segwise. Static and video generation produce creative assets. Editing a video creates a new draft or full-quality version in its project. Campaign launches and budget changes are separate dashboard actions. Starting a query creates a temporary job and may save conversation history.
 
-### Attach reference images
+### Create and edit a video
+
+In an organization with chat video enabled, attach your product images or footage and ask for concepts. For example, “Use my screen recording to brainstorm two hooks for a 15-second ad.” Pick a direction or ask for revisions. Segwise shows the written storyboard, shot timings, copy, references, and separate estimates for a 480p draft and a 1080p full video. Brainstorming and reviewing the written storyboard are free. Before you choose a render, Segwise shows the upfront charge for the first illustrated storyboard and the net cost of each video option. Segwise refunds the storyboard charge when it bills a paid draft or full video.
+
+Reply **Make draft** or **Make full video** to approve both the illustrated storyboard charge and the selected render. Ask for the video’s status in the same conversation to get the finished link. To change a storyboard, describe the shots or copy to revise. To edit a video created here, give the timestamp and requested change, such as “At 0:04, change the caption to Try it today.” Review the edit estimate and reply **Apply edit** to send it to the video’s editor. You can also ask to export a specific draft at full quality and review its estimate before confirming.
+
+### Attach references
 
 Any client can ask **“Show my uploaded images”** or **“Find my bottle photos.”** Segwise lists your own image uploads in the selected organization, newest first, with filenames and thumbnail links. Ask for more or select by number: **“Use image 2 as the product and image 4 as the style.”** The priced plan lists the references for each concept.
 
-Clients that can read a selected local file and make an HTTPS PUT can upload a new PNG, JPEG, or WebP directly. Each file can be up to 50 MiB. The image becomes a personal chat upload, available for future selection. Saving it to the brand kit is a separate action.
+Clients that can read a selected local file and make an HTTPS PUT can upload a PNG, JPEG, or WebP image up to 50 MiB. For video projects they can also upload MP4, MOV, or WebM footage up to 200 MiB. Each file becomes a personal chat upload in the selected organization. In a video-enabled conversation, ask “Find my uploaded demo videos” and select a result to use as footage. Saving it to the brand kit is a separate action.
 
 1. Call `start_segwise_query` with the filename, exact byte count, and MIME type in `reference_upload`. Poll its `job_id` with `get_segwise_query`.
 2. Read the ticket from `result.reference_upload`. PUT the original file bytes to `upload_url` before the ticket’s `expires_at` time, using the returned headers. Send no Segwise credentials or cookies, do not follow redirects, and keep the signed URL out of the chat text.
-3. After a successful PUT, send the `upload_id` in `reference_upload_ids` with the static request. Keep the same organization and conversation. Segwise finalizes the upload, checks ownership, and presents the plan for approval. Use up to ten selected IDs per request.
+3. After a successful PUT, send the `upload_id` in `reference_upload_ids` with the video or static request. Keep the same organization and conversation. Segwise finalizes the upload, checks ownership, and presents the plan for approval. Use up to ten selected IDs per request.
 
 Example tool arguments for the two starts:
 
@@ -42,7 +48,7 @@ Example tool arguments for the two starts:
 {"organization_id":"<same organization>","conversation_id":"<same conversation>","question":"Use my bottle photo as the product in one square ad.","reference_upload_ids":["<upload_id from the ticket>"]}
 ```
 
-A host that cannot transfer a local file can still browse and select existing uploads. Uploading, browsing, and selecting images never starts generation on its own.
+A host that cannot transfer a local file can still browse and select existing uploads. Uploading, browsing, and selecting references are free planning steps.
 
 ## Before you connect
 
@@ -50,7 +56,7 @@ You need a Segwise account with access to an eligible organization, connected an
 
 ## Connect your assistant
 
-Add the server using one of the examples below and complete the browser sign-in with your own Segwise account. The requested `segwise:analytics:query` grant covers analytics, saved report operations, brand edits, and static ad generation for eligible organizations. Generation can spend organization tokens after you approve a priced plan. The client discovers the OAuth settings automatically.
+Add the server using one of the examples below and complete the browser sign-in with your own Segwise account. The requested `segwise:analytics:query` grant covers analytics, saved report operations, brand edits, and video and static ad generation for eligible organizations. Generation can spend organization tokens after you approve a priced plan. The client discovers the OAuth settings automatically.
 
 ### Claude Code
 
@@ -130,7 +136,7 @@ The available answers depend on the data connected to the selected organization.
 | Tool | Purpose |
 | --- | --- |
 | `list_segwise_organizations` | Lists the eligible organizations your signed-in account can access. |
-| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. For analytics, use optional date and app filters and omit `operation` or set it to `analyze`. Omit it for brand edits and static ad requests. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
+| `start_segwise_query` | Starts a job for one organization and returns a `job_id` and `conversation_id`. For analytics, use optional date and app filters and omit `operation` or set it to `analyze`. Omit it for brand edits and video or static ad requests. For an explicit request to save or edit a dashboard report, use `create_report` or `update_report` according to your dashboard permissions. |
 | `get_segwise_query` | Waits for or retrieves the result of a previously started query. |
 
 For static ads, omit `operation`. Send the request, revisions, and the user’s actual confirmation as separate `question` values to `start_segwise_query`, preserving the `organization_id`, `conversation_id`, and app selection. For example:
@@ -144,6 +150,8 @@ Each turn returns its own `job_id`. Poll that ID with `get_segwise_query`. On a 
 Queries can take several minutes. Your assistant should keep polling the same `job_id` while its status is `running`, respect `poll_after_seconds` and `execution_deadline`, and avoid duplicate starts. Polling does not extend the execution deadline. A completed result includes the answer and may include citations and a data timestamp. Query jobs are temporary and can expire or be interrupted by a service restart.
 
 If more than one organization is available, choose its name; the assistant uses the corresponding `organization_id`. For follow-ups in the same conversation and organization, preserve the returned `conversation_id`, including when delegating work to another agent. Start a fresh conversation only when you intend to reset the context. Do not reuse handles across unrelated conversations or organizations.
+
+For video generation, edits and exports, omit `operation` and keep the same organization, conversation and app selection. Show the full returned estimate, including any upfront storyboard charge. Wait for the person to choose **Make draft** or **Make full video** for a render, **Apply edit** for an edit, or **Make full video** to export a specific draft. Relay their actual reply verbatim in a separate `start_segwise_query` call. An unattended client leaves the offer pending. Never supply or resend a paid confirmation automatically. After interruption, retrieve the existing job or ask for **video status** in the same conversation.
 
 ### Edit brand context
 

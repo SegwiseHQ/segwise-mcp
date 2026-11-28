@@ -2,7 +2,7 @@
 
 Use Segwise's advertising and creative-performance insights while planning work in Linear. Ask Linear Agent to analyze creative fatigue, compare campaign performance, or identify promising creative elements, then use the findings to draft experiment tasks, creative-refresh briefs, or project updates.
 
-Segwise supplies analytics, recommendations, and user-approved static ad generation through its hosted MCP server. Linear Agent can also show a proposed change to your Segwise brand context. Saving the proposal updates the brand page for the selected organization or app. Segwise's tools do not create Linear issues themselves and cannot change ad campaigns, budgets, or existing creative assets.
+Segwise supplies analytics, recommendations, and user-approved static and video ad generation through its hosted MCP server. Linear Agent can also show a proposed change to your Segwise brand context. Saving the proposal updates the brand page for the selected organization or app. Video edits create new versions in the same project. Linear issue creation and campaign management use their own tools.
 
 ## Requirements
 
@@ -30,7 +30,7 @@ Adding a directory entry does not connect a person's Segwise account. Each perso
 4. Return to Linear and confirm that Segwise is connected.
 5. Ask Linear Agent: **"List the Segwise organizations I can access."** If multiple organizations are available, choose the organization by name.
 
-The connection uses OAuth 2.1 with PKCE. The `segwise:analytics:query` grant covers analytics, saved report operations, brand edits, and static generation. Generating images can spend organization tokens after you approve a priced plan. For a brand change, Linear Agent must wait for a person to review the preview and supply the exact Save reply before relaying it to Segwise. An unattended task should leave the proposal pending.
+The connection uses OAuth 2.1 with PKCE. The `segwise:analytics:query` grant covers analytics, saved report operations, brand edits, and video and static generation. Static generation, video renders, edits and full-quality exports can spend organization tokens. For video, show the written storyboard, any upfront illustration charge and the applicable estimate. Wait for a person’s **Make draft**, **Make full video** or **Apply edit** reply before relaying it. Leave paid choices pending in unattended tasks. For a brand change, Linear Agent must wait for a person to review the preview and supply the exact Save reply before relaying it to Segwise. An unattended task should leave the proposal pending.
 
 ## Try a workflow
 
@@ -47,6 +47,8 @@ Review the proposed work before asking Linear Agent to create or update issues. 
 To select a reference, ask “Show my uploaded images” and choose a numbered result.
 
 To create static ads from the findings, ask Linear Agent to plan the images in this conversation. Review the concepts, sizes, and token estimate, then request edits or reply **Generate these**. Linear Agent forwards your reply, polls the resulting job, and shows the image links. If polling stops, resume the same job. For an expired job, ask for your existing static results in this conversation before considering another generation.
+
+For a video, attach reference images or footage, brainstorm concepts and revise the free written storyboard. Choosing a draft or full video approves its render and the displayed upfront illustration charge. Segwise refunds that charge when it bills a paid video. Ask for **video status** to get the finished version. For a change such as “Shorten the caption at 0:04,” review the edit estimate and reply **Apply edit**. To export a particular draft, review the export estimate and reply **Make full video**. If polling is interrupted, retrieve the existing job or ask for video status in the same conversation.
 
 ## Analysis timing and follow-ups
 
