@@ -8,7 +8,7 @@ Segwise MCP uses OAuth 2.1 authorization with PKCE. Add the hosted MCP endpoint 
 2. Start the connection and select the client's sign-in or authentication action.
 3. Sign in with the Segwise account that has access to your organization.
 4. Review the requested `segwise:analytics:query` scope. It covers analytics and brand edits for eligible organizations, and saving or editing reports within your dashboard permissions. Before saving a brand change, the client must show you the preview and wait for your Save reply.
-   This grant also covers personal reference uploads, browsing your previous image uploads within the selected organization, and video and static ad generation. You review the plan and its token estimate in the conversation before approving generation.
+   This grant also covers personal reference uploads, browsing your uploaded images and, for video projects, footage within the selected organization, and video and static ad generation. You review the plan and its token estimate in the conversation before approving generation.
 5. Return to your client and ask it to call `list_segwise_organizations`.
 
 If your client asks for a client ID, secret, or registered callback URL, contact Segwise through your existing support channel with the client name and version. OAuth client registration is subject to the service's client and redirect-URL policies. Do not reuse dashboard tokens or internal service credentials.
